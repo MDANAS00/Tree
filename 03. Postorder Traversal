@@ -1,0 +1,17 @@
+Link - https://leetcode.com/problems/binary-tree-postorder-traversal/description/
+Time Complexity - O(N)
+Space Complexity - O(N)
+
+class Solution {
+    List<Integer> tree = new ArrayList<>();
+    void dfs(TreeNode root) {
+        if(root == null) return;
+        dfs(root.left);
+        dfs(root.right);
+        tree.add(root.val);
+    }
+    public List<Integer> postorderTraversal(TreeNode root) {
+        dfs(root);
+        return tree;
+    }
+}
