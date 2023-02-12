@@ -1,4 +1,74 @@
-Link - 
-Time Complexity - 
-Space Complexity - 
+Link - https://leetcode.com/problems/balanced-binary-tree/
+Time Complexity - Check Solution
+Space Complexity - Check Solution
 
+
+//Solution 1 with...[ TC - O(N^2) ]
+class Solution {
+    public int height(TreeNode root) {
+        if(root == null) return 0;
+        
+        int left = height(root.left);
+        int right = height(root.right);
+
+        return Math.max(left,right) + 1;
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        if(root == null) return true;
+
+        int left = height(root.left);
+        int right = height(root.right);
+
+        if(Math.abs(left-right) > 1) return false;
+        return isBalanced(root.right) && isBalanced(root.left);
+    }
+}
+
+//Solution 2 using GLOBAL Variable...[ TC - O(N) ]
+class Solution {
+    boolean balanced = true;
+
+    public int height(TreeNode root) {
+        if(root == null) return 0;
+        
+        int left = height(root.left);
+        int right = height(root.right);
+
+        if(Math.abs(left-right) > 1) balanced = false;
+        
+        return Math.max(left,right) + 1;
+    }
+
+    public boolean isBalanced(TreeNode root) {
+        height(root);
+        return balanced;
+    }
+}
+
+//Solution 3 because global variables are EVIL...[ TC - O(N) ]
+class Solution {
+    public static class Pair{
+        int height = 0;
+        boolean balanced = true;
+    }
+
+    public Pair dfs(TreeNode root) {
+        if(root == null) return new Pair();
+
+        Pair left = dfs(root.left);
+        Pair right = dfs(root.right);
+
+        Pair curr = new Pair();
+
+        curr.height = Math.max(left.height,right.height) + 1;
+        curr.balanced = left.balanced && right.balanced;
+
+        if(Math.abs(left.height-right.height) > 1) curr.balanced = false;
+        
+        return curr;
+    }
+    public boolean isBalanced(TreeNode root) {
+        return dfs(root).balanced;
+    }
+}
