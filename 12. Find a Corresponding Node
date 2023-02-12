@@ -1,0 +1,15 @@
+Link - https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/
+Time Complexity - O(N)
+Space Complexity - O(H)
+
+class Solution {
+    public final TreeNode getTargetCopy(final TreeNode p, final TreeNode q, final TreeNode target) {
+        if(p == null || q == null) return null;
+        if(p == target) return q;
+
+        TreeNode left = getTargetCopy(p.left,q.left,target);
+        if(left != null) return left;
+
+        return getTargetCopy(p.right,q.right,target); 
+    }
+}
