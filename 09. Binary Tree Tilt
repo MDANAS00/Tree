@@ -1,0 +1,24 @@
+Link - https://leetcode.com/problems/binary-tree-tilt/
+Time Complexity - 
+Space Complexity - 
+
+class Solution {
+    int sum = 0;
+
+    public int SubTreeSum(TreeNode root) {
+        if(root == null) return 0;
+
+        int left = SubTreeSum(root.left);
+        int right = SubTreeSum(root.right);
+
+        int tilt = Math.abs(left - right);
+
+        sum += tilt;
+
+        return left + right + root.val;
+    }
+    public int findTilt(TreeNode root) {
+        SubTreeSum(root);
+        return sum;
+    }
+}
