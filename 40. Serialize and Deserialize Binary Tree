@@ -1,0 +1,41 @@
+Link - 
+Time Complexity - O(N)
+Space Complexity - O(H)
+
+
+// Approach 1
+
+public class Codec {
+
+    public String serialize(TreeNode root) {
+        if(root == null) return "N,";
+        String ans = root.val + ",";
+        ans += serialize(root.left);
+        ans += serialize(root.right);
+        return ans;
+    }
+
+    int idx = 0;
+    public TreeNode dfs(String[] nodes) {
+        if(idx == nodes.length) return null;
+        if(nodes[idx].equals("N")){
+            idx++;
+            return null;
+        }
+
+        int val = Integer.parseInt(nodes[idx++]);
+        TreeNode root = new TreeNode(val);
+        root.left = dfs(nodes);
+        root.right = dfs(nodes);
+        return root;
+    }
+
+    public TreeNode deserialize(String data) {
+        String[] nodes = data.split(",");
+        return dfs(nodes);
+    }
+}
+
+
+// Approch 2
+
